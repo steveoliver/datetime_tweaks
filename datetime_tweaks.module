@@ -22,10 +22,10 @@ function datetime_tweaks_element_info_alter(array &$types) {
  */
 function datetime_tweaks_datetime_set_format($element) {
   // Use d/m/Y format.
-  $element['date']['#attributes']['data-drupal-date-format'] = ['d/m/Y'];
-  $element['date']['#date_date_format'] = 'd/m/Y';
+  $element['date']['#attributes']['data-drupal-date-format'] = ['m/d/Y'];
+  $element['date']['#date_date_format'] = 'm/d/Y';
   $element['date']['#attributes']['title'] = t('Enter a valid date - e.g. @format', [
-    '@format' => (new \DateTime())->format('d/m/Y'),
+    '@format' => (new \DateTime())->format('m/d/Y'),
   ]);
   $element['time']['#attributes']['title'] = t('Enter a valid time - e.g. @format', [
     '@format' => (new \DateTime())->format('h:i'),
@@ -42,7 +42,7 @@ function datetime_tweaks_datetime_set_format($element) {
 function datetime_tweaks_datetime_value(&$element, $input, FormStateInterface $form_state) {
   if ($input !== FALSE) {
     try {
-      if ($date = DrupalDateTime::createFromFormat('d/m/Y', $input['date'], !empty($element['#date_timezone']) ? $element['#date_timezone'] : NULL)) {
+      if ($date = DrupalDateTime::createFromFormat('m/d/Y', $input['date'], !empty($element['#date_timezone']) ? $element['#date_timezone'] : NULL)) {
         // Core expects incoming values in Y-m-d format for HTML5 date elements.
         $input['date'] = $date->format('Y-m-d');
       }
