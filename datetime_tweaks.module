@@ -30,6 +30,10 @@ function datetime_tweaks_datetime_set_format($element) {
   $element['time']['#attributes']['title'] = t('Enter a valid time - e.g. @format', [
     '@format' => (new \DateTime())->format('h:i'),
   ]);
+  // Remove the trailing seconds from the value (Drupal will add it back).
+  if (strlen($element['time']['#value']) >= strlen('0:00:00')) {
+    $element['time']['#value'] = substr($element['time']['#value'], 0, strlen($element['time']['#value']) - 3);
+  }
   // Remove seconds in browsers that support HTML5 type=date.
   $element['time']['#attributes']['step'] = 60;
   $element['#attached']['library'][] = 'datetime_tweaks/default_date';
